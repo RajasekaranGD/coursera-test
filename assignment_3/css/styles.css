@@ -1,0 +1,66 @@
+*{	
+	box-sizing: border-box;
+}
+body{
+	font-family: 'Sriracha', cursive;
+	background-color: #e0f5c1;
+	color: black;
+	font-size: 16px;
+}
+
+header{
+	background-color: #e37d76;
+	font-family: 'Holtwood One SC', serif;
+}
+footer{
+	background-color: #e37d76;
+	text-align: center;	
+}
+
+.navbar{	
+	padding: 0; 
+}
+.navbar-brand {
+	font-size: 2.5em;
+	padding-left: 10px;
+}
+
+.nav-item{
+  border: 1px solid black;  
+  text-align: center;
+  background-color: #dbb0ad;
+  color: maroon;
+}
+
+
+@media (min-width: 768px) {
+	#navbarNavDropdown,.navbar-toggler,footer
+	{
+		visibility: hidden;
+	}
+}
+h1 {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 1.75em;
+}
+h3 {
+  margin: 0px;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.75em;
+}
+section{
+  margin: 10px;
+  background-color: grey;
+}
+
+p {
+  clear: both;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  color: maroon;
+  font-size: 1.25em;
+}
