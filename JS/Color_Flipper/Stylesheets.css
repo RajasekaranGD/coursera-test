@@ -24,9 +24,10 @@ body
 
 main
 {
-	position: fixed;
-	top: 42%;
-	left: 37%;
+	position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .text_container
