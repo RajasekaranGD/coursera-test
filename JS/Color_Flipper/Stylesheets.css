@@ -1,0 +1,52 @@
+body
+{
+	background-color: red;
+}
+
+.nav_container
+{
+	display: grid;
+	grid-template-columns: 50% 50%;
+	background-color: #d1cdcd;
+}
+
+.nav_item
+{
+	text-decoration: none ;
+	text-align: center;	
+	padding: .5em;
+	border: 5px;
+	border:.1em solid #c4b3b3;
+	font-weight: bold;
+	font-family: sans-serif;
+
+}
+
+main
+{
+	position: fixed;
+	top: 42%;
+	left: 37%;
+}
+
+.text_container
+{
+	display: grid;
+	justify-content: center;
+}
+
+#background_color
+{
+	padding: .5em 1em .5em 1em;
+	background-color: black;
+	border-radius: .5em;
+	color: white;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+#click
+{
+	border-radius: .5em;
+	background-color: inherit;
+}
