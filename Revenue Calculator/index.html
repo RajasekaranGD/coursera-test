@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="stylesheets.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+
+    <title>Revenue Calculator</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-stark">
+      <div class="container-fluid">
+        <a class="navbar-brand High" href="#">
+          <img src="Images/SGM_logo.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
+          Sri Ganesh Mills
+        </a>
+      </div>
+    </nav>
+    <div class="d-flex justify-content-center"><h1>Revenue Calculator</h1></div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"><a href="#" onclick="Add_RawMaterial();"><img src="Images/add_card_black_24dp.svg"></a></th>
+          <th scope="col">Raw Material</th>
+          <th scope="col">Price/Kg</th>
+          <th scope="col">% Used</th>
+          <th scope="col">% Wastage</th>
+          <th scope="col">Contribution/kg</th>
+        </tr>
+      </thead>
+      <tbody id="RawMaterial_container">
+      </tbody>
+      <thead>
+        <tr>
+          <th scope="col"><a href="#" onclick="Add_Miscellaneous();"><img src="Images/add_card_black_24dp.svg"></a></th>
+          <th scope="col">Miscellaneous</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">Contribution/kg</th>
+        </tr>
+      </thead>
+      <tbody id="Miscellaneous_container">
+      </tbody>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">Total</th>
+          <th scope="col">
+            <input type="number" id="Total_Contribution" class="form-control" value="0" readonly></th>
+        </tr>
+      </thead>
+    </table>
+
+    <script type="text/javascript">
+
+      let MaterialNo = 0 ;
+
+      $(document).ready()
+      {
+        console.log("Document Ready Called");
+
+        let source = '<tr id="Material'+MaterialNo+'">\n<th scope="row"><img src="Images/grade_black_24dp.svg"></th>\n<td><input type="text" class="form-control" placeholder="Item Name"></td>\n<td><input type="number" class="form-control Material_Price" onchange ="Contribution_Calc(\'Material'+MaterialNo+'\');" placeholder="Price" value="0" min="0" step="0.25"></td>\n<td><input type="number" class="form-control Material_Used" placeholder="% Used" min="0" max="100" step="1" disabled value="100"></td>\n<td><input type="number" class="form-control Material_Wastage" onchange ="Contribution_Calc(\'Material'+MaterialNo+'\');" placeholder="% Wastage" value="0" min="0" max="100" step="1"></td>\n<td><input type="number" class="form-control Material_Contribution" value="0" readonly></td>\n</tr>';
+
+        MaterialNo++;
+        $('#RawMaterial_container').append(source);
+
+        source = '<tr id="Material'+MaterialNo+'">\n<th scope="row"><img src="Images/grade_black_24dp.svg"></th>\n<td><input type="text" class="form-control" placeholder="Item Name"></td>\n<td></td>\n<td></td>\n<td></td>\n<td><input type="number" class="form-control Miscellaneous_Contribution" onchange="Total_Contribution_Calc();" value="0" min="0"></td>\n</tr>';
+
+        MaterialNo++;
+        $('#Miscellaneous_container').append(source);
+      }
+
+      function Add_Miscellaneous()
+      {
+        console.log("Add_Miscellaneous function called");
+
+        let source = '<tr id="Material'+MaterialNo+'">\n<th scope="row"><a href="#" onclick="Remove_RawMaterial('+MaterialNo+');"><img src="Images/delete_black_24dp.svg"></a></th>\n<td><input type="text" class="form-control" placeholder="Item Name"></td>\n<td></td>\n<td></td>\n<td></td>\n<td><input type="number" class="form-control Miscellaneous_Contribution" onchange="Total_Contribution_Calc();" value="0" min="0"></td>\n</tr>';
+
+        MaterialNo++;
+        $('#Miscellaneous_container').append(source);
+      }
+
+      function Add_RawMaterial()
+      {
+        console.log("Add_RawMaterial function called");
+
+        let source = '<tr id="Material'+MaterialNo+'">\n<th scope="row"><a href="#" onclick="Remove_RawMaterial('+MaterialNo+');"><img src="Images/delete_black_24dp.svg"></a></th>\n<td><input type="text" class="form-control" placeholder="Item Name"></td>\n<td><input type="number" class="form-control Material_Price" onchange ="Contribution_Calc(\'Material'+MaterialNo+'\');" placeholder="Price" value="0" min="0" step="0.25"></td>\n<td><input type="number" class="form-control Material_Used" placeholder="% Used" min="0" max="100" step="1" value="0"></td>\n<td><input type="number" class="Material_Wastage form-control" value="0" onchange ="Contribution_Calc(\'Material'+MaterialNo+'\');" placeholder="% Wastage" min="0" max="100" step="1"></td>\n<td><input type="number" class="form-control Material_Contribution" value="0" readonly></td>\n</tr>';
+
+        MaterialNo++;
+        $('#RawMaterial_container').append(source);
+
+        $('.Material_Used').off();
+        $('.Material_Used').change(function()
+        {
+          console.log("Material_Used change..");
+          console.log($(this));
+
+          let used = 0;
+          let Materials_Used = $('.Material_Used');
+          console.log(Materials_Used);
+
+          for( let i=1 ; i < Materials_Used.length ; i++ )
+          {
+            console.log(Materials_Used[i].value);
+            used += Number(Materials_Used[i].value);
+
+            if( used > 100 )
+              {
+                $(this).val(0);
+                i=0;
+                used=0;
+              }
+          }
+
+          console.log('Used='+used);
+          Materials_Used[0].value =  100-used;
+          Contribution_Calc('Material'+0);
+          Contribution_Calc($(this).parent().parent().attr('id'));
+        });
+      }
+
+      function Contribution_Calc(MaterialID)
+      {
+        console.log("Contribution_Calc function called.:"+MaterialID);
+
+        let Price = Number($('#'+MaterialID).children().children('.Material_Price').val()) ;
+        let Used = Number($('#'+MaterialID).children().children('.Material_Used').val()) ;
+        let Wastage = Number($('#'+MaterialID).children().children('.Material_Wastage').val()) ;
+
+        console.log('Price='+Price+'\nUsed='+Used+'\nWastage='+Wastage);
+
+        let Contribution = (Price/(100-Wastage))*Used;
+
+        $('#'+MaterialID).children().children('.Material_Contribution').val(Contribution.toFixed(2));
+
+        Total_Contribution_Calc();
+      }
+
+      function Total_Contribution_Calc()
+      {
+        console.log("Total_Contribution_Calc function called");
+
+        let Contribution = 0;
+        let Material_Contribution = $('.Material_Contribution');
+        let Miscellaneous_Contribution = $('.Miscellaneous_Contribution');
+
+        for( let i=0 ; i < Material_Contribution.length ; i++ )
+        {
+          console.log(Material_Contribution[i].value);
+          Contribution += Number(Material_Contribution[i].value);
+        }
+
+        for( let i=0 ; i < Miscellaneous_Contribution.length ; i++ )
+        {
+          console.log(Miscellaneous_Contribution[i].value);
+          Contribution += Number(Miscellaneous_Contribution[i].value);
+        }
+
+        $('#Total_Contribution').val(Contribution);
+      }
+
+      function Remove_RawMaterial(MaterialID)
+      {
+        console.log("Remove_RawMaterial function called");
+
+        $('#Material'+MaterialID).remove();
+        $('#Material0').children().children('.Material_Used').change();
+        Total_Contribution_Calc();
+      }
+
+    </script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

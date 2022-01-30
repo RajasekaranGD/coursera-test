@@ -1,0 +1,48 @@
+:root {
+  --void: #0E0B16;
+  --fuschia: #A239CA;
+  --jewel: #4717F6;
+  --stark: #E7DFDD;
+  --grey: #e9ecef;
+}
+
+.bg-void
+{
+	background-color: var(--void);
+}
+
+.bg-fuschia
+{
+	background-color: var(--fuschia);
+}
+
+.bg-stark
+{
+	background-color: var(--grey);
+}
+
+.bg-jewel
+{
+	background-color: var(--jewel);
+}
+
+.text-jewel
+{
+	color: var(--jewel);
+}
+
+.text-stark
+{
+	color: var(--stark);
+}
+
+.logo
+{
+	font-family: 'MonteCarlo', cursive;
+}
+
+.High
+{
+	font-size: 2em;
+	font-weight: bold;
+}
