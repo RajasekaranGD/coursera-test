@@ -36,6 +36,11 @@
 	color: var(--stark);
 }
 
+.Material_Used
+{
+	min-width: 67px;
+}
+
 .logo
 {
 	font-family: 'MonteCarlo', cursive;
