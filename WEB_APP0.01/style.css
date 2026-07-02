@@ -1,0 +1,103 @@
+/* =========================================
+   1. CSS VARIABLES (The Theme)
+   Change a color here, and it updates everywhere!
+   ========================================= */
+   :root {
+    --bg-color: #121212;      /* Deep black for main background */
+    --panel-bg: #1e1e1e;      /* Slightly lighter black for cards */
+    --text-main: #ffffff;     /* Bright white text */
+    --text-muted: #888888;    /* Gray text for secondary info */
+    --accent-blue: #2196F3;   /* Primary button color */
+    --accent-green: #4CAF50;  /* Success/Connected color */
+    --accent-red: #f44336;    /* Error/Disconnected color */
+}
+
+/* =========================================
+   2. BASE STYLES (Applies to whole page)
+   ========================================= */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-main); 
+    margin: 0; 
+    padding: 20px; 
+}
+
+/* =========================================
+   3. HEADER & BUTTONS
+   ========================================= */
+.header { 
+    display: flex;                   /* Puts title on left, status on right */
+    justify-content: space-between; 
+    align-items: center; 
+    background: var(--panel-bg); 
+    padding: 15px 20px; 
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.header h1 { 
+    margin: 0; 
+    font-size: 24px; 
+    color: var(--accent-blue); 
+}
+
+/* Status Dot Styles */
+.status-container { display: flex; align-items: center; gap: 15px; }
+.status-indicator { display: flex; align-items: center; gap: 8px; font-weight: bold; }
+
+.dot { 
+    height: 12px; width: 12px; 
+    background-color: var(--accent-red); /* Default to red */
+    border-radius: 50%; 
+}
+.dot.connected { 
+    background-color: var(--accent-green); /* Swaps to green when class is added via JS */
+}
+
+/* Button Styles */
+button { 
+    padding: 10px 20px; border: none; border-radius: 5px; 
+    color: white; cursor: pointer; font-weight: bold; font-size: 14px;
+    transition: 0.2s; /* Makes the hover effect smooth */
+}
+button:hover { opacity: 0.8; }
+
+#connectBtn { background: var(--accent-blue); }
+#disconnectBtn { background: var(--accent-red); display: none; /* Hidden by default */ }
+
+/* =========================================
+   4. DASHBOARD GRID & CARDS
+   ========================================= */
+.dashboard-grid {
+    display: grid;
+    /* This automatically makes the grid responsive for mobile phones! */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-top: 4px solid var(--accent-blue); /* This gets overridden by HTML inline styles */
+}
+
+.card h3 { 
+    margin: 0 0 10px 0; 
+    color: var(--text-muted); 
+    font-size: 16px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+.card .value { 
+    font-size: 48px; 
+    font-weight: bold; 
+    margin: 10px 0; 
+    font-family: monospace; /* Monospace keeps numbers from jumping around */
+}
+
+.card .target { font-size: 14px; color: var(--text-muted); }
+.card .target span { color: var(--accent-blue); font-weight: bold;}

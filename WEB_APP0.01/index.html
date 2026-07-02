@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCLSC V2 - Operator Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>SCLSC V2 HMI</h1>
+        
+        <div class="status-container">
+            <div class="status-indicator">
+                <div id="statusDot" class="dot"></div>
+                <span id="statusText">Disconnected</span>
+            </div>
+            
+            <button id="connectBtn" onclick="connectBLE()">Connect BLE</button>
+            <button id="disconnectBtn" onclick="disconnectBLE()">Disconnect</button>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="card" style="border-color: var(--accent-green);">
+            <h3>Winding Speed</h3>
+            <div class="value" id="val_w_act">0.0</div>
+            <div class="target">Target: <span id="val_w_set">0.0</span> RPM</div>
+        </div>
+
+        <div class="card" style="border-color: #FF9800;">
+            <h3>Feed Speed</h3>
+            <div class="value" id="val_f_act">0.0</div>
+            <div class="target">Target: <span id="val_f_set">0.0</span> RPM</div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
