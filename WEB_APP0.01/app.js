@@ -81,8 +81,14 @@ function handleDisconnectEvent() {
    Catches data from ESP32, decodes it, and sends it to UI.
    ======================================================= */
 function parseIncomingJSON(event) {
-    // Convert raw radio bytes back into text
-    const jsonString = new TextDecoder('utf-8').decode(event.target.value);
+    // 1. Get the raw bytes from the BLE notification
+    const value = event.target.value;
+    
+    // 2. Decode the bytes into a string
+    const jsonString = new TextDecoder('utf-8').decode(value);
+    
+    // 🔥 DEBUG: Log the raw string to the browser console every time!
+    console.log("Raw Data Received: ", jsonString);
     
     try {
         // Convert text string into a usable Javascript Object
