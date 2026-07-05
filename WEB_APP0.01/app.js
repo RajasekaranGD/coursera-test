@@ -123,12 +123,15 @@ async function sendJSONCommand(jsonObj) {
         console.warn("Cannot send command, BLE not connected.");
         return;
     }
-    try {
-        // Convert the Javascript Object into a Text String
-        const jsonString = JSON.stringify(jsonObj); 
-        // Convert the Text String into raw bytes and send
-        await rxCharacteristic.writeValue(new TextEncoder('utf-8').encode(jsonString));
-        console.log("Command Sent: ", jsonString);
+    try {const jsonString = JSON.stringify(jsonObj); 
+        const data = new TextEncoder('utf-8').encode(jsonString);
+        
+        // ⚠️ Use this instead of writeValue()
+        // It does not require a handshake response, making it much more
+        // resistant to sluggish Windows Bluetooth stacks.
+        await rxCharacteristic.writeValueWithoutResponse(data);
+        
+        console.log("Command Sent (Without Response): ", jsonString);
     } catch (error) {
         console.error("Failed to send command: ", error);
     }
