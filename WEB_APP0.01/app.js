@@ -41,6 +41,12 @@ async function connectBLE() {
         
         // 5. Tell the browser to listen for data from the ESP32
         await txCharacteristic.startNotifications();
+        console.log("Notifications started!"); 
+
+        // ⚠️ ADD THIS: Small delay to let Windows Bluetooth stack stabilize
+        await new Promise(r => setTimeout(r, 500));
+
+
         txCharacteristic.addEventListener('characteristicvaluechanged', parseIncomingJSON);
 
         // 6. Change the buttons and colors on the screen
@@ -89,7 +95,7 @@ function parseIncomingJSON(event) {
     
     // 🔥 DEBUG: Log the raw string to the browser console every time!
     console.log("Raw Data Received: ", jsonString);
-    
+
     try {
         // Convert text string into a usable Javascript Object
         const data = JSON.parse(jsonString); 
